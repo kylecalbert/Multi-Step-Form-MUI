@@ -10,9 +10,9 @@ interface FormData {
   address: string;
   gender: string;
   fullName: string;
-  userName: string;
+  email: string;
   genderError: string;
-  userNameError: string;
+  emailError: string;
   passwordError: string;
   addressError: string;
   fullNameError: string;
@@ -29,11 +29,11 @@ export const Form = () => {
     password: '',
     confirmPassword: '',
     fullName: '',
-    userName: '',
+    email: '',
     genderError: '',
     addressError: '',
     fullNameError: '',
-    userNameError: '',
+    emailError: '',
     passwordError: '',
     confirmPasswordError: '',
   });
