@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import SecondStep from './SecondStep';
-import { Button } from '@material-ui/core';
+import SecondStep from './AccountDetailsStep';
+import { Button, Box } from '@material-ui/core';
 
-import FirstStep from './FirstStep';
+import FirstStep from './PersonalInfoStep';
 
 interface FormData {
   password: string;
@@ -21,7 +21,7 @@ interface FormData {
 
 export const Form = () => {
   const [page, setPage] = useState(0);
-  const formTitles = ['First Step', 'Second Step'];
+  const formTitles = ['Persosnal Info', 'Account Details'];
 
   const [formData, setFormData] = useState<FormData>({
     address: '',
@@ -51,15 +51,15 @@ export const Form = () => {
   };
 
   const handleNextClick = () => {
-    if (!formData.address || !formData.address.length) {
+    const { address, gender } = formData;
+
+    if (!address || !gender) {
+      ///hand to change the if statement and put the checks all in the same line
       setFormData({
         ...formData,
-        addressError: 'Address is required',
+        addressError: address ? '' : 'Address is required',
+        genderError: gender ? '' : 'Gender is required',
       });
-      return false;
-    }
-    if (!formData.gender || !formData.gender.length) {
-      setFormData({ ...formData, genderError: 'Gender is required' });
       return false;
     }
 
@@ -71,13 +71,13 @@ export const Form = () => {
   };
 
   return (
-    <div className="form">
-      <div className="form-container">
-        <div className="header">
+    <Box className="form">
+      <Box className="form-container">
+        <Box className="header">
           <h1>{formTitles[page]}</h1>
-        </div>
-        <div className="body">{conditionalComponent()}</div>
-        <div className="footer">
+        </Box>
+        <Box className="body">{conditionalComponent()}</Box>
+        <Box className="footer">
           <Button
             style={{ margin: 10 }}
             variant="contained"
@@ -99,8 +99,8 @@ export const Form = () => {
           >
             Next
           </Button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };

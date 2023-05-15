@@ -1,25 +1,49 @@
 import { TextField, Button, Container } from '@material-ui/core';
 
-function SecondStep({ formData, setFormData }: any) {
+function AccountDetailsStep({ formData, setFormData }: any) {
+  const {
+    fullName,
+    password,
+    confirmPassword,
+    email,
+    fullNameError,
+    passwordError,
+    confirmPasswordError,
+    emailError,
+  } = formData;
+
+  const isEmailValid = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleCreateAccount = () => {
-    if (!formData.fullName || !formData.fullName.length) {
+    if (!fullName || !email || (!password && password)) {
+      ///had to change the if statement and put the checks all in the same line
       setFormData({
         ...formData,
-        fullNameError: 'Fullname is required',
+        fullNameError: fullName ? '' : 'FullName is required',
+        emailError: email ? '' : 'email is required',
+        passwordError: password ? '' : 'Please eneter a password',
       });
       return false;
     }
-    if (!formData.userName || !formData.userName.length) {
-      setFormData({ ...formData, userNameError: 'Username is required' });
-      return false;
-    }
-    if (formData.password !== formData.confirmPassword) {
+    if (!isEmailValid(email)) {
       setFormData({
         ...formData,
+        emailError: 'Invalid email address',
+      });
+      return false;
+    }
+    if (password !== confirmPassword) {
+      setFormData({
+        ...formData,
+
         confirmPasswordError: 'Passwords do not match',
       });
       return false;
     }
+    alert('account created successfully');
   };
   return (
     <Container
@@ -38,14 +62,14 @@ function SecondStep({ formData, setFormData }: any) {
         }}
       >
         <TextField
-          error={formData.fullNameError ? true : false}
-          helperText={formData.fullNameError}
+          error={fullNameError ? true : false}
+          helperText={fullNameError}
           label="Fullname"
           margin="normal"
           variant="outlined"
-          value={formData.fullName}
+          value={fullName}
           onChange={(e) => {
-            if (formData.fullName) {
+            if (fullName) {
               setFormData({
                 ...formData,
                 fullName: e.target.value,
@@ -58,37 +82,37 @@ function SecondStep({ formData, setFormData }: any) {
           style={{ width: 300 }}
         />
         <TextField
-          error={formData.userNameError ? true : false}
-          helperText={formData.userNameError}
-          label="Username"
+          error={emailError ? true : false} // checks if error string exists
+          helperText={emailError} //if it does, helper text will be printed out
+          label="email"
           margin="normal"
           variant="outlined"
-          value={formData.userName}
+          value={email}
           onChange={(e) => {
-            if (formData.userName) {
+            if (email) {
               setFormData({
                 ...formData,
-                userName: e.target.value,
-                userNameError: '',
+                email: e.target.value,
+                emailError: '',
               });
             } else {
-              setFormData({ ...formData, userName: e.target.value });
+              setFormData({ ...formData, email: e.target.value });
             }
           }}
           style={{ width: 300 }}
         />
         <TextField
-          error={formData.passwordError ? true : false}
-          helperText={formData.passwordError}
+          error={passwordError ? true : false}
+          helperText={passwordError}
           label="Password"
           margin="normal"
           variant="outlined"
-          value={formData.password}
+          value={password}
           onChange={(e) => {
-            if (formData.password) {
+            if (password) {
               setFormData({
                 ...formData,
-                password: e.target.value,
+                password: e.target.value, ///removes the error once the user enters a value
                 passwordError: '',
               });
             } else {
@@ -98,14 +122,14 @@ function SecondStep({ formData, setFormData }: any) {
           style={{ width: 300 }}
         />
         <TextField
-          error={formData.confirmPasswordError ? true : false}
-          helperText={formData.confirmPasswordError}
+          error={confirmPasswordError ? true : false}
+          helperText={confirmPasswordError}
           label="Confirm Password"
           margin="normal"
           variant="outlined"
-          value={formData.confirmPassword}
+          value={confirmPassword}
           onChange={(e) => {
-            if (formData.confirmPassword) {
+            if (confirmPassword) {
               setFormData({
                 ...formData,
                 confirmPassword: e.target.value,
@@ -130,4 +154,4 @@ function SecondStep({ formData, setFormData }: any) {
   );
 }
 
-export default SecondStep;
+export default AccountDetailsStep;

@@ -1,7 +1,7 @@
 import { TextField, Container } from '@material-ui/core';
 import { handleSubmit } from './FormHandlers';
 
-function FirstStep({ formData, setFormData }: any) {
+function PersosnalInfoStep({ formData, setFormData }: any) {
   return (
     <Container
       style={{
@@ -64,4 +64,4 @@ function FirstStep({ formData, setFormData }: any) {
   );
 }
 
-export default FirstStep;
+export default PersosnalInfoStep;
