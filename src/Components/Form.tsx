@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import SecondStep from './AccountDetailsStep';
+import AccountDetailsStep from './AccountDetailsStep';
 import { Button, Box } from '@material-ui/core';
 
-import FirstStep from './PersonalInfoStep';
+import PersosnalInfoStep from './PersonalInfoStep';
 
 interface FormData {
   password: string;
@@ -41,9 +41,13 @@ export const Form = () => {
   const conditionalComponent = () => {
     switch (page) {
       case 0:
-        return <FirstStep formData={formData} setFormData={setFormData} />;
+        return (
+          <PersosnalInfoStep formData={formData} setFormData={setFormData} />
+        );
       case 1:
-        return <SecondStep formData={formData} setFormData={setFormData} />;
+        return (
+          <AccountDetailsStep formData={formData} setFormData={setFormData} />
+        );
 
       default:
         return <div />;
