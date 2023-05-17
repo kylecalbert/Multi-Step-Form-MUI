@@ -1,5 +1,13 @@
-import { TextField, Button, Container } from '@material-ui/core';
-
+import {
+  TextField,
+  Button,
+  Container,
+  InputAdornment,
+  IconButton,
+} from '@material-ui/core';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useState } from 'react';
 function AccountDetailsStep({ formData, setFormData }: any) {
   const {
     fullName,
@@ -12,22 +20,40 @@ function AccountDetailsStep({ formData, setFormData }: any) {
     emailError,
   } = formData;
 
+  const [visible, setVisible] = useState(false);
+
   const isEmailValid = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailRegex.test(email);
   };
 
+  const EndAdornment = ({ visible, setVisible }: any) => {
+    return (
+      <InputAdornment position="end">
+        <IconButton onClick={() => setVisible(!visible)}>
+          {visible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        </IconButton>
+      </InputAdornment>
+    );
+  };
+
+  console.log('set visible', visible);
+
   const handleCreateAccount = () => {
-    if (!fullName || !email || (!password && password)) {
-      ///had to change the if statement and put the checks all in the same line
+    if (!fullName || !email || !password) {
       setFormData({
         ...formData,
         fullNameError: fullName ? '' : 'FullName is required',
-        emailError: email ? '' : 'email is required',
-        passwordError: password ? '' : 'Please eneter a password',
+        emailError: !email
+          ? 'Email is required'
+          : !isEmailValid(email)
+          ? 'Invalid email address'
+          : '',
+        passwordError: password ? '' : 'Please enter a password',
       });
       return false;
     }
+
     if (!isEmailValid(email)) {
       setFormData({
         ...formData,
@@ -35,16 +61,18 @@ function AccountDetailsStep({ formData, setFormData }: any) {
       });
       return false;
     }
+
     if (password !== confirmPassword) {
       setFormData({
         ...formData,
-
         confirmPasswordError: 'Passwords do not match',
       });
       return false;
     }
-    alert('account created successfully');
+
+    alert('Account created successfully');
   };
+
   return (
     <Container
       style={{
@@ -101,12 +129,14 @@ function AccountDetailsStep({ formData, setFormData }: any) {
           }}
           style={{ width: 300 }}
         />
+
         <TextField
           error={passwordError ? true : false}
           helperText={passwordError}
           label="Password"
           margin="normal"
           variant="outlined"
+          type={visible ? 'password' : 'text'}
           value={password}
           onChange={(e) => {
             if (password) {
@@ -119,6 +149,11 @@ function AccountDetailsStep({ formData, setFormData }: any) {
               setFormData({ ...formData, password: e.target.value });
             }
           }}
+          InputProps={{
+            endAdornment: (
+              <EndAdornment visible={visible} setVisible={setVisible} />
+            ),
+          }}
           style={{ width: 300 }}
         />
         <TextField
@@ -127,6 +162,7 @@ function AccountDetailsStep({ formData, setFormData }: any) {
           label="Confirm Password"
           margin="normal"
           variant="outlined"
+          type={visible ? 'password' : 'text'}
           value={confirmPassword}
           onChange={(e) => {
             if (confirmPassword) {
