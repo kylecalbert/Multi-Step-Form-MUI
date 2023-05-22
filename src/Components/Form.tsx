@@ -58,7 +58,7 @@ export const Form = () => {
     const { address, gender } = formData;
 
     if (!address || !gender) {
-      ///hand to change the if statement and put the checks all in the same line
+      ///had to change the if statement and put the checks all in the same line
       setFormData({
         ...formData,
         addressError: address ? '' : 'Address is required',
@@ -96,6 +96,8 @@ export const Form = () => {
             style={{ margin: 10 }}
             variant="contained"
             color="primary"
+            aria-label="next-button"
+            data-testid="next-button"
             size="small"
             type="submit"
             disabled={page === formTitles.length - 1}

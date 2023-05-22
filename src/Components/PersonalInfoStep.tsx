@@ -1,7 +1,10 @@
 import { TextField, Container } from '@material-ui/core';
 import { handleSubmit } from './FormHandlers';
+import React from 'react';
 
-function PersosnalInfoStep({ formData, setFormData }: any) {
+function PersonalInfoStep({ formData, setFormData }: any) {
+  const { addressError, genderError, address, gender } = formData;
+
   return (
     <Container
       style={{
@@ -20,14 +23,15 @@ function PersosnalInfoStep({ formData, setFormData }: any) {
         }}
       >
         <TextField
-          error={formData.addressError ? true : false}
-          helperText={formData.addressError}
+          error={addressError ? true : false}
+          helperText={addressError}
           label="Address"
           margin="normal"
+          inputProps={{ 'data-testid': 'address-textfield' }}
           variant="outlined"
-          value={formData.address}
+          value={address}
           onChange={(e) => {
-            if (formData.addressError) {
+            if (addressError) {
               setFormData({
                 ...formData,
                 address: e.target.value,
@@ -41,13 +45,14 @@ function PersosnalInfoStep({ formData, setFormData }: any) {
         />
         <TextField
           label="Gender "
-          error={formData.genderError ? true : false}
-          helperText={formData.genderError}
+          error={genderError ? true : false}
+          helperText={genderError}
           margin="normal"
           variant="outlined"
-          value={formData.gender}
+          inputProps={{ 'data-testid': 'gender-textfield' }}
+          value={gender}
           onChange={(e) => {
-            if (formData.genderError) {
+            if (genderError) {
               setFormData({
                 ...formData,
                 gender: e.target.value,
@@ -64,4 +69,4 @@ function PersosnalInfoStep({ formData, setFormData }: any) {
   );
 }
 
-export default PersosnalInfoStep;
+export default PersonalInfoStep;

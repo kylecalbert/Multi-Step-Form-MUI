@@ -8,6 +8,8 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
+import React from 'react';
+
 function AccountDetailsStep({ formData, setFormData }: any) {
   const {
     fullName,
