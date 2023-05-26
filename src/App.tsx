@@ -4,11 +4,17 @@ import './App.css';
 import Login from './Components/Login';
 import SecondStep from './Components/AccountDetailsStep';
 import { Form } from './Components/Form';
+
 function App() {
+  const handleFormSubmit = (loginData: any) => {
+    // Handle the form submit logic here
+    console.log(loginData);
+  };
+
   return (
     <div className="App">
-      {/* <Login /> */}
-      <Form />
+      <Login onFormSubmit={handleFormSubmit} />
+      {/* <Form /> */}
     </div>
   );
 }
